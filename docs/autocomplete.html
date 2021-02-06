@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>suggestible input demo page</title>
+    <link rel="stylesheet" href="https://unpkg.com/@nekohack/normalize.css@1.2.0/dist/index.css">
+    <style>
+        #autocomplete-list {
+            padding: 0 4px;
+            margin: 0;
+            border: solid 1px #d6d6d6;
+            border-top: none;
+            border-radius: 0 0 10px 10px;
+            overflow: hidden;
+        }
+
+        #autocomplete-list li {
+            border-top: solid 1px #d6d6d6;
+            background-color: #fff;
+            color: #000;
+            line-height: 2.5;
+            height: 2.5em;
+            display: flex;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            #autocomplete-list li {
+                background-color: #303030;
+                color: #fff;
+            }
+        }
+    </style>
+    <script>
+        const targets = [
+            'Evergreen',
+            'Material UI',
+            'React',
+            'React DOM',
+            'React Router',
+            'React16',
+            'React17',
+            'Redux',
+            'Vue',
+            'Vue Router',
+            'Vue2',
+            'Vue3',
+            'Vuesax',
+            'Vuetify',
+            'Vuex',
+        ];
+
+        window.onload = function() {
+            document.getElementById('autocomplete-input').addEventListener('keyup', function(e) {
+                let list = [];
+                const listEl = document.getElementById('autocomplete-list');
+                let inputValue = this.value;
+
+                if (inputValue.length > 0) {
+                    listEl.innerHTML = '';
+                    list = autocomplete(inputValue);
+
+                    for (let i = 0; i < list.length; i++) {
+                        listEl.innerHTML += '<li>' + list[i] + '</li>';
+                    }
+                    listEl.style.display = 'block';
+                } else {
+                    const listEl = document.getElementById('autocomplete-list');
+                    listEl.innerHTML = '';
+                    list = [];
+                }
+            });
+
+            function autocomplete(val) {
+                let list = [];
+
+                for (let i = 0; i < targets.length; i++) {
+                    if (val === targets[i].slice(0, val.length)) {
+                        list.push(targets[i]);
+                    }
+                }
+
+                return list;
+            }
+        }
+    </script>
+</head>
+<body>
+<header>
+    <h1>suggestible input demo page</h1>
+</header>
+<main>
+    <section>
+        <div id="autocomplete-wrapper">
+            <input type="text" autofocus="true" id="autocomplete-input" />
+            <ul id="autocomplete-list"></ul>
+        </div>
+    </section>
+</main>
+<footer>
+    <p>
+        Created © 2020 jiyuujin LAB. All Rights Reserved.
+    </p>
+</footer>
+</body>
+</html>

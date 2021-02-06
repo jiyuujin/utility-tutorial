@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>expand multiple sentences demo page</title>
+    <link rel="stylesheet" href="https://unpkg.com/@nekohack/normalize.css@1.2.1/dist/index.css">
+    <style>
+        .expanded-text-multiline {
+            display: -webkit-box;
+            overflow: hidden;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            const plans = document.querySelectorAll('.plan .plan__description');
+
+            const plansReadMore = document.querySelectorAll('.plan .btn-read-more');
+            const plansReadClose = document.querySelectorAll('.plan .btn-read-close');
+            for (let planIndex = 0; planIndex < plans.length; planIndex++) {
+                const planTextHeight = plans[planIndex].clientHeight;
+                const planLineHeight = getComputedStyle(plans[planIndex]).getPropertyValue('line-height').replace(/[^-\d\.]/g, '');
+                if (planTextHeight > planLineHeight * 2) {
+                    plans[planIndex].classList.add('expanded-text-multiline');
+                    plansReadMore[planIndex].style.display = 'block';
+                    plansReadClose[planIndex].style.display = 'none';
+                    plansReadMore[planIndex].addEventListener('click', function(e) {
+                        e.preventDefault();
+                        plans[planIndex].classList.remove('expanded-text-multiline');
+                        plansReadMore[planIndex].style.display = 'none';
+                        plansReadClose[planIndex].style.display = 'block';
+                    });
+                    plansReadClose[planIndex].addEventListener('click', function(e) {
+                        e.preventDefault();
+                        plans[planIndex].classList.add('expanded-text-multiline');
+                        plansReadMore[planIndex].style.display = 'block';
+                        plansReadClose[planIndex].style.display = 'none';
+                    });
+                } else {
+                    plansReadMore[planIndex].style.display = 'none';
+                    plansReadClose[planIndex].style.display = 'none';
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+<header>
+    <h1>expand multiple sentences demo page</h1>
+</header>
+<main>
+    <section>
+        <div class="plan">
+            <div class="plan__description">
+                注文からお支払いまでをアプリで完了。注文の列に並ばずに、商品を受け取れます。 ご家族やお友達とみんなでじっくり商品をお選びいただくことも可能です。注文からお支払いまでをアプリで完了。注文の列に並ばずに、商品を受け取れます。 ご家族やお友達とみんなでじっくり商品をお選びいただくことも可能です。注文からお支払いまでをアプリで完了。注文の列に並ばずに、商品を受け取れます。 ご家族やお友達とみんなでじっくり商品をお選びいただくことも可能です。
+            </div>
+            <div style="display: flex; justify-content: flex-end;">
+                <button class="btn-read-more">全文を表示</button>
+                <button class="btn-read-close">閉じる</button>
+            </div>
+        </div>
+        <div class="plan">
+            <div class="plan__description">
+                注文からお支払いまでをアプリで完了。注文の列に並ばずに、商品を受け取れます。 ご家族やお友達とみんなでじっくり商品をお選びいただくことも可能です。注文からお支払いまでをアプリで完了。注文の列に並ばずに、商品を受け取れます。 ご家族やお友達とみんなでじっくり商品をお選びいただくことも可能です。注文からお支払いまでをアプリで完了。注文の列に並ばずに、商品を受け取れます。 ご家族やお友達とみんなでじっくり商品をお選びいただくことも可能です。
+            </div>
+            <div style="display: flex; justify-content: flex-end;">
+                <button class="btn-read-more">全文を表示</button>
+                <button class="btn-read-close">閉じる</button>
+            </div>
+        </div>
+        <div class="plan">
+            <div class="plan__description">
+                注文からお支払いまでをアプリで完了。注文の列に並ばずに、商品を受け取れます。 ご家族やお友達とみんなでじっくり商品をお選びいただくことも可能です。注文からお支払いまでをアプリで完了。注文の列に並ばずに、商品を受け取れます。 ご家族やお友達とみんなでじっくり商品をお選びいただくことも可能です。注文からお支払いまでをアプリで完了。注文の列に並ばずに、商品を受け取れます。 ご家族やお友達とみんなでじっくり商品をお選びいただくことも可能です。
+            </div>
+            <div style="display: flex; justify-content: flex-end;">
+                <button class="btn-read-more">全文を表示</button>
+                <button class="btn-read-close">閉じる</button>
+            </div>
+        </div>
+    </section>
+</main>
+<footer>
+    <p>
+        Created © 2020 jiyuujin LAB. All Rights Reserved.
+    </p>
+</footer>
+</body>
+</html>

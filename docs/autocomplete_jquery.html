@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jquery-ui suggestible input demo page</title>
+    <link rel="stylesheet" href="https://unpkg.com/@nekohack/normalize.css@1.2.0/dist/index.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css">
+    <script>
+        const targets = [
+            'Evergreen',
+            'Material UI',
+            'React',
+            'React DOM',
+            'React Router',
+            'React16',
+            'React17',
+            'Redux',
+            'Vue',
+            'Vue Router',
+            'Vue2',
+            'Vue3',
+            'Vuesax',
+            'Vuetify',
+            'Vuex',
+        ];
+
+        window.onload = function() {
+            $('#autocomplete-input').autocomplete({
+                // 部分一致
+                // source: targets,
+                // 前方一致
+                source: function(request, response) {
+                    const filteredArray = $.map(targets, function(item) {
+                        if (item.startsWith(request.term)) {
+                            return item
+                        } else {
+                            return null
+                        }
+                    });
+                    response(filteredArray)
+                },
+                minLength: 0
+            }).focus(function() {
+                $(this).autocomplete('search', '');
+            });
+        }
+    </script>
+    <script src="https://code.jquery.com/jquery-1.8.3.js" defer></script>
+    <script src="https://code.jquery.com/ui/1.9.2/jquery-ui.js" defer></script>
+</head>
+<body>
+<header>
+    <h1>jquery-ui suggestible input demo page</h1>
+</header>
+<main>
+    <section>
+        <input type="text" id="autocomplete-input" />
+    </section>
+</main>
+<footer>
+    <p>
+        Created © 2020 jiyuujin LAB. All Rights Reserved.
+    </p>
+</footer>
+</body>
+</html>

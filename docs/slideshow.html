@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>image slideshow demo page</title>
+    <link rel="stylesheet" href="https://unpkg.com/@nekohack/normalize.css@1.2.1/dist/index.css">
+    <style>
+        .overview__image img {
+            margin-right: 8px;
+        }
+
+        #blackout {
+            display: none;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            z-index: 1000;
+            background-color: rgba(0, 0, 0, .65);
+        }
+
+        .expanded-image {
+            overflow: auto;
+            padding: 0;
+            margin: 0;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 800px;
+            height: auto;
+            z-index: 3000;
+        }
+
+        #prevArrow {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 20%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        #prevArrow .ico {
+            position: absolute;
+            top: 50%;
+            left: 12%;
+            width: 30px;
+            height: 30px;
+            visibility: visible;
+            border-left: 3px solid #fff;
+            border-top: 3px solid #fff;
+            transform: rotate(-45deg);
+            transition: left .3s cubic-bezier(0.215, 0.61, 0.355, 1), opacity .3s;
+        }
+
+        #nextArrow {
+            display: none;
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 20%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        #nextArrow .ico {
+            position: absolute;
+            top: 50%;
+            right: 12%;
+            width: 30px;
+            height: 30px;
+            visibility: visible;
+            border-right: 3px solid #fff;
+            border-top: 3px solid #fff;
+            transform: rotate(45deg);
+            transition: right .3s cubic-bezier(0.215, 0.61, 0.355, 1), opacity .3s;
+        }
+    </style>
+    <script>
+        let isExpanded = false;
+        let imageIndex = 0;
+
+        function resizeImage(index) {
+            const blackout = document.getElementById('blackout');
+            const prevArrow = document.getElementById('prevArrow');
+            const nextArrow = document.getElementById('nextArrow');
+            const images = document.querySelectorAll('.overview__image img');
+            imageIndex = index
+            if (isExpanded) {
+                blackout.style.display = 'none';
+                prevArrow.style.display = 'none';
+                nextArrow.style.display = 'none';
+                images[imageIndex].classList.remove('expanded-image');
+            } else {
+                blackout.style.display = 'block';
+                if (imageIndex !== 0) {
+                    prevArrow.style.display = 'block';
+                } else {
+                    prevArrow.style.display = 'none'
+                }
+                if (imageIndex !== images.length - 1) {
+                    nextArrow.style.display = 'block';
+                } else {
+                    nextArrow.style.display = 'none'
+                }
+                images[imageIndex].classList.add('expanded-image');
+                images[imageIndex].style.left = (window.innerWidth - images[imageIndex].clientWidth) / 2 + 'px';
+                images[imageIndex].style.top = (window.innerHeight - images[imageIndex].clientHeight) / 2 + 'px';
+            }
+            isExpanded = !isExpanded;
+        }
+
+        function prevImage() {
+            const images = document.querySelectorAll('.overview__image img');
+            images[imageIndex].classList.remove('expanded-image');
+            imageIndex = imageIndex - 1;
+            isExpanded = false;
+            resizeImage(imageIndex);
+        }
+
+        function nextImage() {
+            const images = document.querySelectorAll('.overview__image img');
+            images[imageIndex].classList.remove('expanded-image');
+            imageIndex = imageIndex + 1;
+            isExpanded = false;
+            resizeImage(imageIndex);
+        }
+    </script>
+</head>
+<body>
+<header>
+    <h1>image slideshow demo page</h1>
+</header>
+<main>
+    <section>
+        <div id="blackout">
+            <div id="prevArrow" onclick="prevImage()">
+                <div class="ico"></div>
+            </div>
+            <div id="nextArrow" onclick="nextImage()">
+                <div class="ico"></div>
+            </div>
+        </div>
+        <div class="overview__image" style="display: flex; overflow-x: auto;">
+            <img width="75%" height="75%" src="https://placehold.jp/1280x720.png" alt="" onclick="resizeImage(0)">
+            <img width="75%" height="75%" src="https://placehold.jp/1280x720.png" alt="" onclick="resizeImage(1)">
+            <img width="75%" height="75%" src="https://placehold.jp/1280x720.png" alt="" onclick="resizeImage(2)">
+        </div>
+    </section>
+</main>
+<footer>
+    <p>
+        Created © 2020 jiyuujin LAB. All Rights Reserved.
+    </p>
+</footer>
+</body>
+</html>

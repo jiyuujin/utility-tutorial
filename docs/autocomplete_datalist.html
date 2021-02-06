@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>datalist suggestible input demo page</title>
+    <link rel="stylesheet" href="https://unpkg.com/@nekohack/normalize.css@1.2.0/dist/index.css">
+    <style>
+        #autocomplete-list {
+            padding: 0 4px;
+            margin: 0;
+            border: solid 1px #d6d6d6;
+            border-top: none;
+            border-radius: 0 0 10px 10px;
+            overflow: hidden;
+        }
+
+        #autocomplete-list li {
+            border-top: solid 1px #d6d6d6;
+            background-color: #fff;
+            color: #000;
+            line-height: 2.5;
+            height: 2.5em;
+            display: flex;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            #autocomplete-list li {
+                background-color: #303030;
+                color: #fff;
+            }
+        }
+    </style>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/normalize.css/service-worker.js').then(function(registration) {
+                    console.log('Registration was successful: ', registration.scope);
+                }, function(err) {
+                    console.log('Registration failed: ', err);
+                });
+            });
+        }
+
+        document.addEventListener('input',function(e) {
+            const t = e.target;
+            if (t.nodeName=='INPUT' && t.type== 'text') {
+                const v = t.value;
+                const l = t.getAttribute('list');
+                Array.prototype.map.call(document.querySelectorAll('#' + l + ' option'), function(i) {
+                    i.disabled=!i.value.match(new RegExp('^' + v));
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+<header>
+    <h1>datalist suggestible input demo page</h1>
+</header>
+<main>
+    <section>
+        <div id="autocomplete-wrapper">
+            <input type="text" autofocus="true" id="autocomplete-input" list="autocomplete-list" />
+            <datalist id="autocomplete-list">
+                <option value="Evergreen">
+                <option value="Material UI">
+                <option value="React">
+                <option value="React DOM">
+                <option value="React Router">
+                <option value="React16">
+                <option value="React17">
+                <option value="Redux">
+                <option value="Vue">
+                <option value="Vue Router">
+                <option value="Vue2">
+                <option value="Vue3">
+                <option value="Vuesax">
+                <option value="Vuetify">
+                <option value="Vuex">
+            </datalist>
+        </div>
+    </section>
+</main>
+<footer>
+    <p>
+        Created © 2020 jiyuujin LAB. All Rights Reserved.
+    </p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>expand sentence demo page</title>
+    <link rel="stylesheet" href="https://unpkg.com/@nekohack/normalize.css@1.2.1/dist/index.css">
+    <style>
+        .expanded-text-multiline {
+            display: -webkit-box;
+            overflow: hidden;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            const body = document.querySelector('.overview .overview__description__body');
+
+            const bodyTextHeight = body.clientHeight;
+            const bodyLineHeight = getComputedStyle(body).getPropertyValue('line-height').replace(/[^-\d\.]/g, '');
+
+            const bodyReadMore = document.querySelector('.overview .btn-read-more');
+            const bodyReadClose = document.querySelector('.overview .btn-read-close');
+            if (bodyTextHeight > bodyLineHeight * 2) {
+                body.classList.add('expanded-text-multiline');
+                bodyReadMore.style.display = 'block';
+                bodyReadClose.style.display = 'none';
+                bodyReadMore.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    body.classList.remove('expanded-text-multiline');
+                    bodyReadMore.style.display = 'none';bodyReadClose.style.display = 'block';
+                });
+                bodyReadClose.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    body.classList.add('expanded-text-multiline');
+                    bodyReadMore.style.display = 'block';
+                    bodyReadClose.style.display = 'none';
+                });
+            } else {
+                bodyReadMore.style.display = 'none';
+                bodyReadClose.style.display = 'none';
+            }
+        }
+    </script>
+<body>
+<header>
+    <h1>expand sentence demo page</h1>
+</header>
+<main>
+    <section>
+        <div class="overview">
+            <div class="overview__description__body">
+                自分のキャリアのスタートはIOSネイティブアプリのエンジニアとして。これまでのキャリアの中でIOSネイティブアプリエンジニアとして業務を通じ基礎的なコーディングを取得、WEBを扱うサーバサイドで足りていないと言った環境も相まってJQUERYを始めとしたCSS設計、フレームワークの使用など徐々にフロントエンドエンジニアという領域にも踏み込んでいきました。
+            </div>
+            <div style="display: flex; justify-content: flex-end;">
+                <button class="btn-read-more">全文を表示</button>
+                <button class="btn-read-close">閉じる</button>
+            </div>
+        </div>
+    </section>
+</main>
+<footer>
+    <p>
+        Created © 2020 jiyuujin LAB. All Rights Reserved.
+    </p>
+</footer>
+</body>
+</html>
